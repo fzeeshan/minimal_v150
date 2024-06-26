@@ -1,0 +1,48 @@
+[package]
+name = "minimal-runtime"
+version = "0.1.0"
+authors.workspace = true
+description = "A minimal Substrate example runtime"
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+parity-scale-codec = { version = "3.0.0", default-features = false }
+scale-info = { version = "2.6.0", default-features = false }
+
+# this is a frame-based runtime, thus importing `frame` with runtime feature enabled.
+#frame = { path = "../../../frame", default-features = false, features = ["experimental", "runtime"] }
+frame = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.5.0", default-features = false, features = ["experimental", "runtime"] }
+frame-support = { branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
+
+# pallets that we want to use
+pallet-balances = { branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
+pallet-sudo ={ branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
+pallet-timestamp = { branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
+pallet-transaction-payment = { branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
+pallet-transaction-payment-rpc-runtime-api = { branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
+
+# genesis builder that allows us to interacto with runtime genesis config
+sp-genesis-builder = { branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" }
+
+
+[build-dependencies]
+substrate-wasm-builder = { branch = "release-polkadot-v1.5.0", default-features = false, git = "https://github.com/paritytech/polkadot-sdk" , optional = true }
+
+[features]
+default = ["std"]
+std = [
+	"frame-support/std",
+	"frame/std",
+	"pallet-balances/std",
+	"pallet-sudo/std",
+	"pallet-timestamp/std",
+	"pallet-transaction-payment-rpc-runtime-api/std",
+	"pallet-transaction-payment/std",
+	"parity-scale-codec/std",
+	"scale-info/std",
+	"sp-genesis-builder/std",
+	"substrate-wasm-builder",
+]
